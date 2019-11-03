@@ -1,7 +1,7 @@
 package com.turchanovskyi.mediasphere.securityConfig;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+        import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 public class WebMvcConfig implements WebMvcConfigurer {
 

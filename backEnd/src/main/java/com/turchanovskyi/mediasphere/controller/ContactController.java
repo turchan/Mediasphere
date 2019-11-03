@@ -17,21 +17,18 @@ public class ContactController {
     }
 
     @GetMapping
-    public Iterable<Contact> getAll()
-    {
+    public Iterable<Contact> getAll() {
         return contactService.findAll();
     }
 
     @GetMapping("/{contactId}")
-    public Contact getContact(@PathVariable Long contactId)
-    {
+    public Contact getContact(@PathVariable Long contactId) {
         return contactService.findById(contactId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public Contact createContact(@RequestBody Contact contact)
-    {
+    public Contact createContact(@RequestBody Contact contact) {
         contact.setId_contact(null);
 
         contactService.save(contact);
@@ -41,8 +38,7 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/update")
-    public Contact updateContact(@RequestBody Contact contact)
-    {
+    public Contact updateContact(@RequestBody Contact contact) {
         contactService.save(contact);
 
         return contact;
@@ -50,9 +46,8 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{contactId}")
-    public void delete(@PathVariable Long contactId)
-    {
+    public void delete(@PathVariable Long contactId) {
         contactService.deleteById(contactId);
-    }
 
+    }
 }
