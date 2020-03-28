@@ -27,9 +27,9 @@ public class Material implements Serializable {
     @Column(name = "deadline")
     private Date deadline;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    private User id_author;
+    private User id_user;
 
     @Column(name = "verified")
     private int verified;
@@ -48,12 +48,12 @@ public class Material implements Serializable {
 
     public Material() {}
 
-    public Material(String title, String description, String location, Date deadline, User id_author, int verified, Date registered, int views, List<Sphere> sphereList) {
+    public Material(String title, String description, String location, Date deadline, User id_user, int verified, Date registered, int views, List<Sphere> sphereList) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.deadline = deadline;
-        this.id_author = id_author;
+        this.id_user = id_user;
         this.verified = verified;
         this.registered = registered;
         this.views = views;
@@ -100,12 +100,12 @@ public class Material implements Serializable {
         this.deadline = deadline;
     }
 
-    public User getId_author() {
-        return id_author;
+    public User getId_user() {
+        return id_user;
     }
 
-    public void setId_author(User id_author) {
-        this.id_author = id_author;
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
     }
 
     public int getVerified() {

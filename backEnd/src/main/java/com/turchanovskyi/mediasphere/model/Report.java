@@ -13,15 +13,15 @@ public class Report implements Serializable {
     @Column(name = "id_report")
     private Long id_report;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "content")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    private User id_sender;
+    private User id_user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_contact")
@@ -32,10 +32,10 @@ public class Report implements Serializable {
 
     public Report() {}
 
-    public Report(String name, String content, User id_sender, Contact id_contact, Date sent) {
-        this.name = name;
+    public Report(String title, String content, User id_user, Contact id_contact, Date sent) {
+        this.title = title;
         this.content = content;
-        this.id_sender = id_sender;
+        this.id_user = id_user;
         this.id_contact = id_contact;
         this.sent = sent;
     }
@@ -48,12 +48,12 @@ public class Report implements Serializable {
         this.id_report = id_report;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -64,12 +64,12 @@ public class Report implements Serializable {
         this.content = content;
     }
 
-    public User getId_sender() {
-        return id_sender;
+    public User getId_user() {
+        return id_user;
     }
 
-    public void setId_sender(User id_sender) {
-        this.id_sender = id_sender;
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
     }
 
     public Contact getId_contact() {

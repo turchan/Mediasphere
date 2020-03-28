@@ -3,12 +3,14 @@ package com.turchanovskyi.mediasphere.controller;
 
 import com.turchanovskyi.mediasphere.exception.BadRequestException;
 import com.turchanovskyi.mediasphere.model.AuthProvider;
+import com.turchanovskyi.mediasphere.model.Role;
+import com.turchanovskyi.mediasphere.model.RoleName;
 import com.turchanovskyi.mediasphere.model.User;
 import com.turchanovskyi.mediasphere.payload.ApiResponse;
 import com.turchanovskyi.mediasphere.payload.AuthResponse;
 import com.turchanovskyi.mediasphere.payload.LoginRequest;
 import com.turchanovskyi.mediasphere.payload.SignUpRequest;
-import com.turchanovskyi.mediasphere.repository.UserRepository;
+import com.turchanovskyi.mediasphere.repository.RoleRepository;
 import com.turchanovskyi.mediasphere.securityConfig.auth.TokenProvider;
 import com.turchanovskyi.mediasphere.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashSet;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -36,11 +40,14 @@ public class AuthController {
 
     private final TokenProvider tokenProvider;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+    private final RoleRepository roleRepository;
+
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder, TokenProvider tokenProvider, RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
+        this.roleRepository = roleRepository;
     }
 
     @PostMapping("/login")
@@ -65,12 +72,18 @@ public class AuthController {
             throw new BadRequestException("Email address already in use.");
         }
 
+        Set<Role> roles = new HashSet();
+        Role role = roleRepository.findByName(RoleName.USER)
+                .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+        roles.add(role);
+
         // Creating user's account
         User user = new User();
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
         user.setProvider(AuthProvider.local);
+        user.setRoles(roles);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -9,12 +9,12 @@ public class Purchase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_purchases")
+    @Column(name = "id_purchase")
     private Long id_purchase;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    private User id_buyer;
+    private User id_user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_contact")
@@ -22,8 +22,8 @@ public class Purchase implements Serializable {
 
     public Purchase() {}
 
-    public Purchase(User id_buyer, Contact id_contact) {
-        this.id_buyer = id_buyer;
+    public Purchase(User id_user, Contact id_contact) {
+        this.id_user = id_user;
         this.id_contact = id_contact;
     }
 
@@ -35,12 +35,12 @@ public class Purchase implements Serializable {
         this.id_purchase = id_purchase;
     }
 
-    public User getId_buyer() {
-        return id_buyer;
+    public User getId_user() {
+        return id_user;
     }
 
-    public void setId_buyer(User id_buyer) {
-        this.id_buyer = id_buyer;
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
     }
 
     public Contact getId_contact() {

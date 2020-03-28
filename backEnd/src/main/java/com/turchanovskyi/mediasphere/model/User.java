@@ -77,13 +77,13 @@ public class User implements Serializable {
                 inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "id_author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Material> materialList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id_sender", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Report> reportList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id_buyer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Purchase> purchaseList = new ArrayList<>();
 
     @OneToMany(mappedBy = "id_notification", fetch = FetchType.LAZY)

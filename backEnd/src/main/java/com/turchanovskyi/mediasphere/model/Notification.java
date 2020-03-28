@@ -13,14 +13,14 @@ public class Notification implements Serializable {
     @Column(name = "id_notification")
     private Long id_notification;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "content")
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_notification_type")
+    @JoinColumn(name = "id_type")
     private NotificationType id_type;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,8 +32,8 @@ public class Notification implements Serializable {
 
     public Notification() { }
 
-    public Notification(String name, String content, NotificationType id_type, User id_user, Date occurred) {
-        this.name = name;
+    public Notification(String title, String content, NotificationType id_type, User id_user, Date occurred) {
+        this.title = title;
         this.content = content;
         this.id_type = id_type;
         this.id_user = id_user;
@@ -48,12 +48,12 @@ public class Notification implements Serializable {
         this.id_notification = id_notification;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
