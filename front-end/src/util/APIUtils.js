@@ -49,3 +49,60 @@ export function signup(signupRequest) {
         body: JSON.stringify(signupRequest)
     });
 }
+
+export function getContacts() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/contacts",
+        method: 'GET'
+    })
+}
+
+export function getContact(id_contact) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/contacts/${id_contact}`,
+        method: 'GET'
+    })
+}
+
+export function updateContact(updateRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/contacts/update",
+        method: 'PUT',
+        body: JSON.stringify(updateRequest)
+    });
+}
+
+export function deleteContact(id_contact) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/contacts/delete/${id_contact}`,
+        method: 'DELETE'
+    });
+}
+
+export function createContact(createRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/contacts`,
+        method: 'POST',
+        body: JSON.stringify(createRequest)
+    });
+}

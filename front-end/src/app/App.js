@@ -11,6 +11,10 @@ import Profile from '../user/profile/Profile';
 import OAuth2RedirectHandler from '../user/oauth2/OAuth2RedirectHandler';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
+import Contacts from '../contacts/Contacts';
+import UpdateContactComponent from "../contacts/UpdateContactComponent";
+import ContactComponent from "../contacts/ContactComponent";
+import AddContactComponent from "../contacts/AddContactComponent";
 import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 import PrivateRoute from '../common/PrivateRoute';
@@ -80,6 +84,14 @@ class App extends Component {
                         <Route exact path="/" component={Home}></Route>
                         <PrivateRoute path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                                       component={Profile}></PrivateRoute>
+                        <PrivateRoute exact path="/contacts" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={Contacts}></PrivateRoute>
+                        <PrivateRoute exact path="/contacts/update/:id" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={UpdateContactComponent}></PrivateRoute>
+                        <PrivateRoute exact path="/contacts/:id" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={ContactComponent}></PrivateRoute>
+                        <PrivateRoute exact path="/contacts/add" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={AddContactComponent}></PrivateRoute>
                         <Route path="/login"
                                render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
                         <Route path="/signup"

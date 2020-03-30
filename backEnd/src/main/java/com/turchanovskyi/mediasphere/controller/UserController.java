@@ -30,12 +30,14 @@ public class UserController {
     }
 
     @GetMapping("/allUsers")
+    @PreAuthorize("hasRole('USER')")
     public Iterable<User> getAll()
     {
         return userService.findAll();
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("hasRole('USER')")
     public Optional<User> getUser(@PathVariable Long userId)
     {
         return userService.findById(userId);
@@ -43,6 +45,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/update")
+    @PreAuthorize("hasRole('USER')")
     public User update(@RequestBody User user)
     {
         userService.save(user);
@@ -52,6 +55,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{userId}")
+    @PreAuthorize("hasRole('USER')")
     public void delete(@PathVariable Long userId)
     {
         userService.deleteById(userId);

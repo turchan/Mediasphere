@@ -89,6 +89,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "id_notification", fetch = FetchType.LAZY)
     private List<Notification> notificationList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
+    private List<Contact> contactList = new ArrayList<>();
+
     public User() { }
 
     public User(String name, String surname, String email, String workplace, String position, String location, String country, String city, String phone, int points, String password, String vk, String fb, String twitter, String website, Date registered, Set<Role> roles) {
@@ -309,5 +312,13 @@ public class User implements Serializable {
 
     public void setNotificationList(List<Notification> notificationList) {
         this.notificationList = notificationList;
+    }
+
+    public List<Contact> getContactList() {
+        return contactList;
+    }
+
+    public void setContactList(List<Contact> contactList) {
+        this.contactList = contactList;
     }
 }

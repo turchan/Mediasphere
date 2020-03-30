@@ -45,14 +45,18 @@ public class Contact implements Serializable {
     @Column(name = "city")
     private String city;
 
-    @Column(name = "verified")
-    private int verified;
-
     @Column(name = "registered")
     private Date registered;
 
-    @Column(name = "views")
-    private int views;
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "purchases")
+    private int purchases;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    private User id_user;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "contacts_spheres",
@@ -68,7 +72,7 @@ public class Contact implements Serializable {
 
     public Contact() {}
 
-    public Contact(String name, String surname, String information, String email, String phone, String workplace, String position, String location, String country, String city, int verified, Date registered, int views, List<Sphere> sphereList) {
+    public Contact(String name, String surname, String information, String email, String phone, String workplace, String position, String location, String country, String city, Date registered, int price, int purchases, User id_user, List<Sphere> sphereList) {
         this.name = name;
         this.surname = surname;
         this.information = information;
@@ -79,9 +83,10 @@ public class Contact implements Serializable {
         this.location = location;
         this.country = country;
         this.city = city;
-        this.verified = verified;
         this.registered = registered;
-        this.views = views;
+        this.price = price;
+        this.purchases = purchases;
+        this.id_user = id_user;
         this.sphereList = sphereList;
     }
 
@@ -173,14 +178,6 @@ public class Contact implements Serializable {
         this.city = city;
     }
 
-    public int getVerified() {
-        return verified;
-    }
-
-    public void setVerified(int verified) {
-        this.verified = verified;
-    }
-
     public Date getRegistered() {
         return registered;
     }
@@ -189,12 +186,28 @@ public class Contact implements Serializable {
         this.registered = registered;
     }
 
-    public int getViews() {
-        return views;
+    public int getPrice() {
+        return price;
     }
 
-    public void setViews(int views) {
-        this.views = views;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(int purchases) {
+        this.purchases = purchases;
+    }
+
+    public User getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(User id_user) {
+        this.id_user = id_user;
     }
 
     public List<Sphere> getSphereList() {
