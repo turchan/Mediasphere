@@ -3,6 +3,8 @@ import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin" : "*", 
+        "Access-Control-Allow-Credentials" : true 
     })
 
     if(localStorage.getItem(ACCESS_TOKEN)) {
@@ -31,6 +33,18 @@ export function getCurrentUser() {
     return request({
         url: API_BASE_URL + "/user/me",
         method: 'GET'
+    });
+}
+
+export function updateProfile(updateRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/user/update",
+        method: 'PUT',
+        body: JSON.stringify(updateRequest)
     });
 }
 
@@ -101,8 +115,110 @@ export function createContact(createRequest) {
     }
 
     return request({
-        url: API_BASE_URL + `/contacts`,
+        url: API_BASE_URL + `/contacts/create`,
         method: 'POST',
         body: JSON.stringify(createRequest)
+    });
+}
+
+export function getReports() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/reports",
+        method: 'GET'
+    })
+}
+
+export function createReport(createRequest, id_contact) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/reports/create/${id_contact}`,
+        method: 'POST',
+        body: JSON.stringify(createRequest)
+    });
+}
+
+export function deleteReport(id_report) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/reports/delete/${id_report}`,
+        method: 'DELETE'
+    });
+}
+
+export function getReport(id_report) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/reports/${id_report}`,
+        method: 'GET'
+    })
+}
+
+export function getMaterials() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/materials",
+        method: 'GET'
+    })
+}
+
+export function getMaterial(id_material) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/materials/${id_material}`,
+        method: 'GET'
+    })
+}
+
+export function updateMaterial(updateRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/materials/update",
+        method: 'PUT',
+        body: JSON.stringify(updateRequest)
+    });
+}
+
+export function createMaterial(createRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/materials/create`,
+        method: 'POST',
+        body: JSON.stringify(createRequest)
+    });
+}
+
+export function deleteMaterial(id_material) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/materials/delete/${id_material}`,
+        method: 'DELETE'
     });
 }

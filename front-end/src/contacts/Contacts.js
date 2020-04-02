@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { getContacts, deleteContact } from "../util/APIUtils";
-import { NavLink, Router } from 'react-router-dom';
-
+import { getContacts, deleteContact, getCurrentUser } from "../util/APIUtils";
 
 class Contacts extends Component {
 
@@ -11,6 +9,7 @@ class Contacts extends Component {
         this.state = {
             contacts: [],
             loading: false,
+            currentUser: null,
             message: null
         }
 
@@ -19,9 +18,24 @@ class Contacts extends Component {
         this.updateContactClicked = this.updateContactClicked.bind(this);
         this.deleteContactClicked = this.deleteContactClicked.bind(this);
         this.addContactClicked = this.addContactClicked.bind(this);
+        this.addReportClicked = this.addReportClicked.bind(this);
     }       
 
     componentDidMount() {
+
+        getCurrentUser()
+            .then(response => {
+                this.setState({
+                    currentUser: response,
+                    authenticated: true,
+                    loading: false
+                });
+            }).catch(error => {
+            this.setState({
+                loading: false
+            });
+        });
+
         this.refreshContacts(); 
     }
 
@@ -81,7 +95,11 @@ class Contacts extends Component {
             loading: true
         });
 
-        this.props.history.push(`/contacts/add`);
+        this.props.history.push(`/createContact`);
+    }
+
+    addReportClicked(id_contact) {
+        this.props.history.push(`/createReport/${id_contact}`);
     }
 
     render() {
@@ -99,6 +117,8 @@ class Contacts extends Component {
                                 <th>Information</th>
                                 <th>Price</th>
                                 <th>Update</th>
+                                <th>Delete</th>
+                                <th>Report</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -112,13 +132,14 @@ class Contacts extends Component {
                                             <td onClick={() => this.showContactClicked(contact.id_contact)}>{contact.price}</td>
                                             <td><button onClick={() => this.updateContactClicked(contact.id_contact)}>Update</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.deleteContactClicked(contact.id_contact)}>Delete</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.addReportClicked(contact.id_contact)}>Report</button></td>
                                         </tr>
                                )
                            }
                         </tbody>
                     </table>
                     <div className="row">
-                        <button className="btn btn-success" onClick={this.addContactClicked}>Add</button>
+                        <button className="btn btn-success" onClick={this.addContactClicked}>Create Contact</button>
                     </div>
                 </div>
             </div>

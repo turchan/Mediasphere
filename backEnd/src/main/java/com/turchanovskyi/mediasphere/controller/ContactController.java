@@ -1,9 +1,12 @@
 package com.turchanovskyi.mediasphere.controller;
 
+import com.turchanovskyi.mediasphere.exception.ResourceNotFoundException;
 import com.turchanovskyi.mediasphere.model.Contact;
+import com.turchanovskyi.mediasphere.model.User;
 import com.turchanovskyi.mediasphere.securityConfig.auth.CurrentUser;
 import com.turchanovskyi.mediasphere.securityConfig.auth.UserPrincipal;
 import com.turchanovskyi.mediasphere.service.ContactService;
+import com.turchanovskyi.mediasphere.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/contacts")
 public class ContactController {
 
-    private final UserController userController;
+    private final UserService userService;
     private final ContactService contactService;
 
-    public ContactController(UserController userController, ContactService contactService) {
-        this.userController = userController;
+    public ContactController(UserService userService, ContactService contactService) {
+        this.userService = userService;
         this.contactService = contactService;
     }
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
-    public Iterable<Contact> getAll(@CurrentUser UserPrincipal userPrincipal) {
-        userController.getCurrentUser(userPrincipal);
-
+    public Iterable<Contact> getAll() {
         return contactService.findAll();
     }
 
@@ -38,8 +39,15 @@ public class ContactController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     @PreAuthorize("hasRole('USER')")
-    public Contact createContact(@RequestBody Contact contact) {
+    public Contact createContact(@RequestBody Contact contact, @CurrentUser UserPrincipal userPrincipal) {
+
+        User user = userService.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+
         contact.setId_contact(null);
+        contact.setId_user(user);
+
+        user.getContactList().add(contact);
 
         contactService.save(contact);
 

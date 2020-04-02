@@ -1,5 +1,8 @@
 package com.turchanovskyi.mediasphere.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -7,6 +10,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
 
     @Id
@@ -77,9 +81,11 @@ public class User implements Serializable {
                 inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnoreProperties("id_user")
     @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Material> materialList = new ArrayList<>();
 
+    @JsonIgnoreProperties({"id_user", "id_contact"})
     @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Report> reportList = new ArrayList<>();
 
@@ -89,6 +95,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "id_notification", fetch = FetchType.LAZY)
     private List<Notification> notificationList = new ArrayList<>();
 
+    @JsonIgnoreProperties("id_user")
     @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Contact> contactList = new ArrayList<>();
 

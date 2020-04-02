@@ -1,5 +1,7 @@
 package com.turchanovskyi.mediasphere.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "materials")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Material implements Serializable {
 
     @Id
@@ -27,12 +30,10 @@ public class Material implements Serializable {
     @Column(name = "deadline")
     private Date deadline;
 
+    @JsonIgnoreProperties("materialList")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User id_user;
-
-    @Column(name = "verified")
-    private int verified;
 
     @Column(name = "registered")
     private Date registered;
@@ -48,13 +49,12 @@ public class Material implements Serializable {
 
     public Material() {}
 
-    public Material(String title, String description, String location, Date deadline, User id_user, int verified, Date registered, int views, List<Sphere> sphereList) {
+    public Material(String title, String description, String location, Date deadline, User id_user, Date registered, int views, List<Sphere> sphereList) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.deadline = deadline;
         this.id_user = id_user;
-        this.verified = verified;
         this.registered = registered;
         this.views = views;
         this.sphereList = sphereList;
@@ -108,14 +108,6 @@ public class Material implements Serializable {
         this.id_user = id_user;
     }
 
-    public int getVerified() {
-        return verified;
-    }
-
-    public void setVerified(int verified) {
-        this.verified = verified;
-    }
-
     public Date getRegistered() {
         return registered;
     }
@@ -131,6 +123,8 @@ public class Material implements Serializable {
     public void setViews(int views) {
         this.views = views;
     }
+
+
 
     public List<Sphere> getSphereList() {
         return sphereList;
