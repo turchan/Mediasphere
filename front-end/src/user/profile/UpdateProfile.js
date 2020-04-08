@@ -104,10 +104,7 @@ class UpdateProfile extends Component {
                         {
                             (props) => (
                                 <Form>
-                                    <fieldset className="form-group">
-                                        <label>Id</label>
-                                        <Field className="form-control" type="text" name="id_user" disabled />
-                                    </fieldset>
+                                    <Field className="form-control" type="text" name="id_user" hidden />
                                     <fieldset className="form-group">
                                         <label>Name</label>
                                         <Field className="form-control" type="text" name="name" />

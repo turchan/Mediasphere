@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getMaterials, getCurrentUser, deleteMaterial } from "../util/APIUtils";
+import { getMaterials, getCurrentUser } from "../util/APIUtils";
+import { Container, Row, Card, Button, CardDeck } from "react-bootstrap";
 
 class Materials extends Component {
 
@@ -15,9 +16,8 @@ class Materials extends Component {
 
         this.refreshMaterials = this.refreshMaterials.bind(this);
         this.showMaterialClicked = this.showMaterialClicked.bind(this);
-        this.updateMaterialClicked = this.updateMaterialClicked.bind(this);
-        this.deleteMaterialClicked = this.deleteMaterialClicked.bind(this);
         this.addMaterialClicked = this.addMaterialClicked.bind(this);
+
     }       
 
     componentDidMount() {
@@ -67,28 +67,6 @@ class Materials extends Component {
         this.props.history.push(`/materials/${id_material}`);
     }
 
-    updateMaterialClicked(id_material) {
-        this.setState({
-            loading: true
-        });
-
-        console.log("update " + id_material);
-        this.props.history.push(`/materials/update/${id_material}`);
-    }
-
-    deleteMaterialClicked(id_material) {
-        this.setState({
-            loading: true
-        });
-
-        console.log("delete " + id_material);
-        deleteMaterial(id_material)
-            .then(response => {
-                this.setState({ message: `Delete of material ${id_material} Successful` })
-                this.refreshMaterials();
-            })
-    }
-
     addMaterialClicked() {
         this.setState({
             loading: true
@@ -100,7 +78,75 @@ class Materials extends Component {
     render() {
         console.log('render');
         return (
-            <div className="container">
+            <Container>
+                <div>
+                    <h1>All Materials</h1>
+                    {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+                </div>
+                <Row>
+                    <CardDeck>
+                    {
+                        this.state.materials.map(
+                        material => 
+                            <tr key={material.id_material}>
+                                    <Card style={{ width: '18rem', margin: '1rem'}}>
+                                        <Card.Body>
+                                            <Card.Title>{material.title}</Card.Title>
+                                            <Card.Subtitle className="mb-2 text-muted">{material.location} {material.deadline}</Card.Subtitle>
+                                            <Card.Text>
+                                                {material.description}
+                                            </Card.Text>
+                                            <Button onClick={() => this.showMaterialClicked(material.id_material)}>Show Material</Button>
+                                        </Card.Body>
+                                    </Card>
+                            </tr>
+                        )
+                    }
+                    </CardDeck>
+                </Row>
+                <div className="row">
+                        <button className="btn btn-success" onClick={this.addMaterialClicked}>Create Material</button>
+                </div>
+            </Container>
+        )
+    }
+}
+
+export default Materials;
+
+/*            <Container>
+                <div>
+                    <h1>All Contacts</h1>
+                    {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+                </div>
+                <Row>
+                    <CardDeck>
+                    {
+                        this.state.contacts.map(
+                        contact => 
+                            <tr key={contact.id_contact}>
+                                    <Card style={{ width: '18rem', margin: '1rem'}}>
+                                        <Card.Body>
+                                            <Card.Title>{contact.name} {contact.surname}</Card.Title>
+                                            <Card.Subtitle className="mb-2 text-muted">{contact.position}</Card.Subtitle>
+                                            <Card.Text>
+                                                {contact.information}
+                                            </Card.Text>
+                                            <Button onClick={() => this.showContactClicked(contact.id_contact)}>Show Contact</Button>
+                                        </Card.Body>
+                                    </Card>
+                            </tr>
+                        )
+                    }
+                    </CardDeck>
+                </Row>
+                <div className="row">
+                    <button className="btn btn-primary " onClick={this.addContactClicked}>Create Contact</button>
+                </div>
+            </Container>*/
+
+
+            /*<div className="container">
                 <h3>All Materials</h3>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
                 <div className="container">
@@ -138,9 +184,4 @@ class Materials extends Component {
                         <button className="btn btn-success" onClick={this.addMaterialClicked}>Create Material</button>
                     </div>
                 </div>
-            </div>
-        )
-    }
-}
-
-export default Materials;
+            </div> */

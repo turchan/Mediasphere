@@ -16,6 +16,7 @@ import Contacts from '../contacts/Contacts';
 import UpdateContactComponent from "../contacts/UpdateContactComponent";
 import ContactComponent from "../contacts/ContactComponent";
 import AddContactComponent from "../contacts/AddContactComponent";
+import PurchasedContacts from "../contacts/PurchasedContacts";
 import Reports from "../reports/Reports";
 import ReportComponent from "../reports/ReportComponent";
 import AddReportComponent from "../reports/AddReportComponent";
@@ -116,7 +117,9 @@ class App extends Component {
                         <PrivateRoute exact path="/createMaterial" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
                                       component={AddMaterialComponent}></PrivateRoute>
                         <PrivateRoute exact path="/materials/update/:id" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
-                                      component={UpdateMaterialComponent}></PrivateRoute>                                      
+                                      component={UpdateMaterialComponent}></PrivateRoute>  
+                        <PrivateRoute exact path="/yourContacts" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+                                      component={PurchasedContacts}></PrivateRoute>               
                         <Route path="/login"
                                render={(props) => <Login authenticated={this.state.authenticated} {...props} />}></Route>
                         <Route path="/signup"

@@ -22,12 +22,12 @@ public class Report implements Serializable {
     @Column(name = "content")
     private String content;
 
-    @JsonIgnoreProperties("reportList")
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User id_user;
 
-    @JsonIgnoreProperties("reportList")
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_contact")
     private Contact id_contact;

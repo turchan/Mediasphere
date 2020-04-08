@@ -30,7 +30,7 @@ public class Material implements Serializable {
     @Column(name = "deadline")
     private Date deadline;
 
-    @JsonIgnoreProperties("materialList")
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User id_user;

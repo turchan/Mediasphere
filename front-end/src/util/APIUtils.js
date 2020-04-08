@@ -109,17 +109,29 @@ export function deleteContact(id_contact) {
     });
 }
 
-export function createContact(createRequest) {
+export function createContact(createRequest, id_sphere) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + `/contacts/create`,
+        url: API_BASE_URL + `/contacts/create/${id_sphere}`,
         method: 'POST',
         body: JSON.stringify(createRequest)
     });
 }
+
+export function purchaseContact(id_contact) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + `/contacts/purchase/${id_contact}`,
+        method: 'GET'
+    });
+}
+
 
 export function getReports() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
@@ -200,13 +212,13 @@ export function updateMaterial(updateRequest) {
     });
 }
 
-export function createMaterial(createRequest) {
+export function createMaterial(createRequest, id_sphere) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + `/materials/create`,
+        url: API_BASE_URL + `/materials/create/${id_sphere}`,
         method: 'POST',
         body: JSON.stringify(createRequest)
     });

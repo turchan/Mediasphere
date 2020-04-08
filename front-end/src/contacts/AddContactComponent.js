@@ -19,7 +19,8 @@ class AddContactComponent extends Component {
             location: '',
             country: '',
             city: '',
-            price: null
+            price: null,
+            id_sphere: null
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -38,10 +39,11 @@ class AddContactComponent extends Component {
             location: values.location,
             country: values.country,
             city: values.city,
-            price: values.price
+            price: values.price,
+            id_sphere: values.id_sphere
         }
 
-        createContact(contact)
+        createContact(contact, contact.id_sphere)
             .then(() =>  this.props.history.push('/contacts'));
 
         console.log(values);
@@ -110,6 +112,10 @@ class AddContactComponent extends Component {
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <Field className="form-control" type="text" name="id_user" hidden />
+                                    </fieldset>
+                                    <fieldset className="form-group">
+                                        <label>Sphere</label>
+                                        <Field className="form-control" type="text" name="id_sphere" />
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>
                                 </Form>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { getContacts, deleteContact, getCurrentUser } from "../util/APIUtils";
+import { getContacts, getCurrentUser } from "../util/APIUtils";
+import { Container, Row, Card, Button, CardDeck } from "react-bootstrap";
+
 
 class Contacts extends Component {
 
@@ -15,10 +17,9 @@ class Contacts extends Component {
 
         this.refreshContacts = this.refreshContacts.bind(this);
         this.showContactClicked = this.showContactClicked.bind(this);
-        this.updateContactClicked = this.updateContactClicked.bind(this);
-        this.deleteContactClicked = this.deleteContactClicked.bind(this);
         this.addContactClicked = this.addContactClicked.bind(this);
         this.addReportClicked = this.addReportClicked.bind(this);
+
     }       
 
     componentDidMount() {
@@ -68,33 +69,7 @@ class Contacts extends Component {
         this.props.history.push(`/contacts/${id_contact}`);
     }
 
-    updateContactClicked(id_contact) {
-        this.setState({
-            loading: true
-        });
-
-        console.log("update " + id_contact);
-        this.props.history.push(`/contacts/update/${id_contact}`);
-    }
-
-    deleteContactClicked(id_contact) {
-        this.setState({
-            loading: true
-        });
-
-        console.log("delete " + id_contact);
-        deleteContact(id_contact)
-            .then(response => {
-                this.setState({ message: `Delete of contact ${id_contact} Successful` })
-                this.refreshContacts();
-            })
-    }
-
     addContactClicked() {
-        this.setState({
-            loading: true
-        });
-
         this.props.history.push(`/createContact`);
     }
 
@@ -105,7 +80,46 @@ class Contacts extends Component {
     render() {
         console.log('render');
         return (
-            <div className="container">
+            <Container>
+                <div>
+                    <h1>All Contacts</h1>
+                    {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
+                </div>
+                <Row>
+                    <CardDeck>
+                    {
+                        this.state.contacts.map(
+                        contact => 
+                            <tr key={contact.id_contact}>
+                                    <Card style={{ width: '19rem', margin: '1rem'}} className="shadow-sm p-3 mb-5 bg-white rounded">
+                                        <Card.Body>
+                                            <Card.Title>{contact.name} {contact.surname}</Card.Title>
+                                            <Card.Subtitle className="mb-2 text-muted">{contact.position}</Card.Subtitle>
+                                            <Card.Text>
+                                                {contact.information}
+                                            </Card.Text>
+                                            <div>
+                                                <Button onClick={() => this.showContactClicked(contact.id_contact)}>Show Contact</Button>
+                                                <Button className="btn btn-danger" style={{margin: '1rem'}} onClick={() => this.addReportClicked(contact.id_contact)}>Report</Button>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                            </tr>
+                        )
+                    }
+                    </CardDeck>
+                </Row>
+                <div className="row">
+                    <button className="btn btn-primary " onClick={this.addContactClicked}>Create Contact</button>
+                </div>
+            </Container>
+        )
+    }
+}
+
+export default Contacts;
+
+/*<div className="container">
                 <h3>All Contacts</h3>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
                 <div className="container">
@@ -119,6 +133,7 @@ class Contacts extends Component {
                                 <th>Update</th>
                                 <th>Delete</th>
                                 <th>Report</th>
+                                <th>Purchase</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,21 +145,17 @@ class Contacts extends Component {
                                             <td onClick={() => this.showContactClicked(contact.id_contact)}>{contact.surname}</td>
                                             <td onClick={() => this.showContactClicked(contact.id_contact)}>{contact.information}</td>
                                             <td onClick={() => this.showContactClicked(contact.id_contact)}>{contact.price}</td>
-                                            <td><button onClick={() => this.updateContactClicked(contact.id_contact)}>Update</button></td>
-                                            <td><button className="btn btn-warning" onClick={() => this.deleteContactClicked(contact.id_contact)}>Delete</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateContactClicked(contact.id_contact)}>Update</button></td>
+                                            <td><button className="btn btn-danger" onClick={() => this.deleteContactClicked(contact.id_contact)}>Delete</button></td>
                                             <td><button className="btn btn-warning" onClick={() => this.addReportClicked(contact.id_contact)}>Report</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.purchaseClicked(contact.id_contact)}>Purchase</button></td>
                                         </tr>
                                )
                            }
                         </tbody>
                     </table>
                     <div className="row">
-                        <button className="btn btn-success" onClick={this.addContactClicked}>Create Contact</button>
+                        <button className="btn btn-primary " onClick={this.addContactClicked}>Create Contact</button>
                     </div>
                 </div>
-            </div>
-        )
-    }
-}
-
-export default Contacts;
+            </div> */

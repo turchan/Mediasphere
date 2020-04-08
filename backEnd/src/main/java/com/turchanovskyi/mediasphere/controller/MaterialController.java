@@ -2,10 +2,12 @@ package com.turchanovskyi.mediasphere.controller;
 
 import com.turchanovskyi.mediasphere.exception.ResourceNotFoundException;
 import com.turchanovskyi.mediasphere.model.Material;
+import com.turchanovskyi.mediasphere.model.Sphere;
 import com.turchanovskyi.mediasphere.model.User;
 import com.turchanovskyi.mediasphere.securityConfig.auth.CurrentUser;
 import com.turchanovskyi.mediasphere.securityConfig.auth.UserPrincipal;
 import com.turchanovskyi.mediasphere.service.MaterialService;
+import com.turchanovskyi.mediasphere.service.SphereService;
 import com.turchanovskyi.mediasphere.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,10 +20,12 @@ public class MaterialController {
 
     private final MaterialService materialService;
     private final UserService userService;
+    private final SphereService sphereService;
 
-    public MaterialController(MaterialService materialService, UserService userService) {
+    public MaterialController(MaterialService materialService, UserService userService, SphereService sphereService) {
         this.materialService = materialService;
         this.userService = userService;
+        this.sphereService = sphereService;
     }
 
     @GetMapping
@@ -39,15 +43,19 @@ public class MaterialController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/create")
+    @PostMapping("/create/{sphereId}")
     @PreAuthorize("hasRole('USER')")
-    public Material create(@RequestBody Material material, @CurrentUser UserPrincipal userPrincipal)
+    public Material create(@RequestBody Material material, @CurrentUser UserPrincipal userPrincipal,
+                           @PathVariable Long sphereId)
     {
         User user = userService.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+        Sphere sphere = sphereService.findById(sphereId);
+
 
         material.setId_material(null);
         material.setId_user(user);
+        material.getSphereList().add(sphere);
 
         user.getMaterialList().add(material);
 

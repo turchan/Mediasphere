@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { getReports, getCurrentUser, deleteReport, getReport} from "../util/APIUtils";
+import { Table } from "react-bootstrap";
+
 
 class Reports extends Component {
 
@@ -84,31 +86,29 @@ class Reports extends Component {
             <div className="container">
                 <h3>All Reports</h3>
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
-                <div className="container">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Content</th>
-                                <th>Sent</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           {
-                               this.state.reports.map(
-                                   report => 
-                                        <tr key={report.id_report}>
-                                            <td onClick={() => this.showReportClicked(report.id_report)}>{report.title}</td>
-                                            <td onClick={() => this.showReportClicked(report.id_report)}>{report.content}</td>
-                                            <td onClick={() => this.showReportClicked(report.id_report)}>{report.sent}</td>
-                                            <td><button onClick={() => this.deleteReportClicked(report.id_report)}>Delete</button></td>
-                                        </tr>
-                               )
-                           }
-                        </tbody>
-                    </table>
-                </div>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Sent</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.reports.map(
+                                report => 
+                                    <tr key={report.id_report}>
+                                        <td onClick={() => this.showReportClicked(report.id_report)}>{report.title}</td>
+                                        <td onClick={() => this.showReportClicked(report.id_report)}>{report.content}</td>
+                                        <td onClick={() => this.showReportClicked(report.id_report)}>{report.sent}</td>
+                                        <td><button className="btn btn-danger" onClick={() => this.deleteReportClicked(report.id_report)}>Delete</button></td>
+                                    </tr>
+                            )
+                        }
+                    </tbody>
+                </Table>
             </div>
         )
     }

@@ -1,21 +1,26 @@
 package com.turchanovskyi.mediasphere.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "purchases")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Purchase implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_purchase")
     private Long id_purchase;
 
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User id_user;
 
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_contact")
     private Contact id_contact;

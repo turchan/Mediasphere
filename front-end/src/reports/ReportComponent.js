@@ -32,13 +32,12 @@ class ReportComponent extends Component {
         let {id_report, title, content, sent} = this.state;
 
         return (
-            <div>
+            <div className="container">
                 <h3>Report</h3>
-                <div className="container">
-                    <div>{id_report}</div>
-                    <div>{title}</div>
-                    <div>{content}</div>
-                    <div>{sent}</div>
+                <div>
+                    <div>Title: {title}</div>
+                    <div>Contant: {content}</div>
+                    <div>Sent: {sent}</div>
                 </div>
             </div>
         )

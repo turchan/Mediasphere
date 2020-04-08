@@ -1,7 +1,8 @@
 package com.turchanovskyi.mediasphere.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -75,6 +76,7 @@ public class User implements Serializable {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Nullable
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
                 joinColumns = @JoinColumn(name = "id_user"),
@@ -89,6 +91,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Report> reportList = new ArrayList<>();
 
+    @JsonIgnoreProperties({"id_user", "id_purchase"})
     @OneToMany(mappedBy = "id_user", fetch = FetchType.LAZY)
     private List<Purchase> purchaseList = new ArrayList<>();
 

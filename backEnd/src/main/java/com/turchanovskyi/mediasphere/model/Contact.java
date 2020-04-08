@@ -57,7 +57,7 @@ public class Contact implements Serializable {
     @Column(name = "purchases")
     private int purchases;
 
-    @JsonIgnoreProperties("contactList")
+    @JsonIgnoreProperties({"materialList", "reportList", "purchaseList", "notificationList", "contactList"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_user")
     private User id_user;
@@ -72,7 +72,8 @@ public class Contact implements Serializable {
     @OneToMany(mappedBy = "id_contact", fetch = FetchType.LAZY)
     private List<Report> reportList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id_contact", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("id_contact")
+    @OneToMany(mappedBy = "id_contact", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Purchase> purchaseList = new ArrayList<>();
 
     public Contact() {}

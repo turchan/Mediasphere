@@ -85,10 +85,7 @@ class UpdateContactComponent extends Component {
                         {
                             (props) => (
                                 <Form>
-                                    <fieldset className="form-group">
-                                        <label>Id</label>
-                                        <Field className="form-control" type="text" name="id_contact" disabled />
-                                    </fieldset>
+                                    <Field className="form-control" type="text" name="id_contact" hidden />
                                     <fieldset className="form-group">
                                         <label>Name</label>
                                         <Field className="form-control" type="text" name="name" />

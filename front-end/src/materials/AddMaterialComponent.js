@@ -12,7 +12,8 @@ class AddContactComponent extends Component {
             title: '',
             description: '',
             location: '',
-            deadline: ''
+            deadline: '',
+            id_sphere: null
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -24,10 +25,11 @@ class AddContactComponent extends Component {
             title: values.title,
             description: values.description,
             location: values.location,
-            deadline: values.deadline
+            deadline: values.deadline,
+            id_sphere: values.id_sphere
         }
 
-        createMaterial(material)
+        createMaterial(material, material.id_sphere)
             .then(() =>  this.props.history.push('/materials'));
 
         console.log(values);
@@ -65,6 +67,10 @@ class AddContactComponent extends Component {
                                     <fieldset className="form-group">
                                         <label>DeadLine</label>
                                         <Field className="form-control" type="text" name="deadline" />
+                                    </fieldset>
+                                    <fieldset className="form-group">
+                                        <label>Sphere</label>
+                                        <Field className="form-control" type="text" name="id_sphere" />
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>
                                 </Form>
