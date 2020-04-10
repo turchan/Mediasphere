@@ -9,7 +9,6 @@ import com.turchanovskyi.mediasphere.securityConfig.auth.CurrentUser;
 import com.turchanovskyi.mediasphere.securityConfig.auth.UserPrincipal;
 import com.turchanovskyi.mediasphere.service.ContactService;
 import com.turchanovskyi.mediasphere.service.PurchaseService;
-import com.turchanovskyi.mediasphere.service.SphereService;
 import com.turchanovskyi.mediasphere.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +21,11 @@ public class ContactController {
 
     private final UserService userService;
     private final ContactService contactService;
-    private final SphereService sphereService;
     private final PurchaseService purchaseService;
 
-    public ContactController(UserService userService, ContactService contactService, SphereService sphereService, PurchaseService purchaseService) {
+    public ContactController(UserService userService, ContactService contactService, PurchaseService purchaseService) {
         this.userService = userService;
         this.contactService = contactService;
-        this.sphereService = sphereService;
         this.purchaseService = purchaseService;
     }
 
@@ -50,17 +47,7 @@ public class ContactController {
     public Contact createContact(@RequestBody Contact contact, @CurrentUser UserPrincipal userPrincipal,
                                  @PathVariable Long sphereId) {
 
-        User user = userService.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
-        Sphere sphere = sphereService.findById(sphereId);
-
-        contact.setId_contact(null);
-        contact.setId_user(user);
-        contact.getSphereList().add(sphere);
-
-        user.getContactList().add(contact);
-
-        contactService.save(contact);
+        contactService.create(contact, userPrincipal, sphereId);
 
         return contact;
     }
@@ -69,7 +56,7 @@ public class ContactController {
     @PutMapping("/update")
     @PreAuthorize("hasRole('USER')")
     public Contact updateContact(@RequestBody Contact contact) {
-        contactService.save(contact);
+        contactService.update(contact);
 
         return contact;
     }
@@ -82,10 +69,7 @@ public class ContactController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
         Contact contact = contactService.findById(contactId);
 
-        Purchase purchase = new Purchase();
-        purchase.setId_purchase(null);
-        purchase.setId_user(user);
-        purchase.setId_contact(contact);
+        Purchase purchase = new Purchase.Builder(null, user, contact).build();
 
         user.getPurchaseList().add(purchase);
         contact.getPurchaseList().add(purchase);

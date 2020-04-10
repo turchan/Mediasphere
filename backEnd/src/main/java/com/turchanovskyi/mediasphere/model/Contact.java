@@ -96,6 +96,103 @@ public class Contact implements Serializable {
         this.sphereList = sphereList;
     }
 
+    public Contact(Builder builder) {
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.information = builder.information;
+        this.email = builder.email;
+        this.phone = builder.phone;
+        this.workplace = builder.workplace;
+        this.position = builder.position;
+        this.location = builder.location;
+        this.country = builder.country;
+        this.city = builder.city;
+        this.price = builder.price;
+        this.id_user = builder.id_user;
+    }
+
+    public static class Builder {
+        private Long id_contact;
+        private String name;
+        private String surname;
+        private String information;
+        private String email;
+        private String phone;
+        private String workplace;
+        private String position;
+        private String location;
+        private String country;
+        private String city;
+        private int price;
+        private User id_user;
+
+        public Builder(Long id_contact, User id_user) {
+            this.id_contact = id_contact;
+            this.id_user = id_user;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Builder setInformation(String information) {
+            this.information = information;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder setWorkplace(String workplace) {
+            this.workplace = workplace;
+            return this;
+        }
+
+        public Builder setPosition(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder setLocation(String location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder setCountry(String country) {
+            this.country = country;
+            return this;
+        }
+
+        public Builder setCity(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder setPrice(int price) {
+            this.price = price;
+            return this;
+        }
+
+        public Contact build() {
+            Contact contact = new Contact(this);
+
+            return contact;
+        }
+    }
+
     public Long getId_contact() {
         return id_contact;
     }

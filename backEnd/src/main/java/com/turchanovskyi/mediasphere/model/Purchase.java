@@ -32,6 +32,29 @@ public class Purchase implements Serializable {
         this.id_contact = id_contact;
     }
 
+    public Purchase(Builder builder) {
+        this.id_user = builder.id_user;
+        this.id_contact = builder.id_contact;
+    }
+
+    public static class Builder {
+        private Long id_purchase;
+        private User id_user;
+        private Contact id_contact;
+
+        public Builder(Long id_purchase, User id_user, Contact id_contact) {
+            this.id_purchase = id_purchase;
+            this.id_user = id_user;
+            this.id_contact = id_contact;
+        }
+
+        public Purchase build() {
+            Purchase purchase = new Purchase(this);
+
+            return purchase;
+        }
+    }
+
     public Long getId_purchase() {
         return id_purchase;
     }

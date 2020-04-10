@@ -12,19 +12,17 @@ import com.turchanovskyi.mediasphere.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/reports")
 public class ReportController {
 
     private final ReportService reportService;
-    private final ContactService contactService;
-    private final UserService userService;
 
-    public ReportController(ReportService reportService, ContactService contactService, UserService userService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
-        this.contactService = contactService;
-        this.userService = userService;
     }
 
     @GetMapping
@@ -42,20 +40,9 @@ public class ReportController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create/{contactId}")
     public Report create(@RequestBody Report report, @PathVariable Long contactId,
-                         @CurrentUser UserPrincipal userPrincipal)
-    {
-        Contact contact = contactService.findById(contactId);
-        User user = userService.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+                         @CurrentUser UserPrincipal userPrincipal) {
 
-        report.setId_report(null);
-        report.setId_contact(contact);
-        report.setId_user(user);
-
-        contact.getReportList().add(report);
-        user.getReportList().add(report);
-
-        reportService.save(report);
+        reportService.create(report, contactId, userPrincipal);
 
         return report;
     }
@@ -64,7 +51,7 @@ public class ReportController {
     @PutMapping("/update")
     public Report update(@RequestBody Report report)
     {
-        reportService.save(report);
+        reportService.update(report);
 
         return report;
     }

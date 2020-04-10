@@ -60,6 +60,54 @@ public class Material implements Serializable {
         this.sphereList = sphereList;
     }
 
+    public Material(Builder builder) {
+        this.title = builder.title;
+        this.description = builder.description;
+        this.location = builder.location;
+        this.deadline = builder.deadline;
+        this.id_user = builder.id_user;
+    }
+
+    public static class Builder {
+        private Long id_material;
+        private String title;
+        private String description;
+        private String location;
+        private Date deadline;
+        private User id_user;
+
+        public Builder(Long id_material, User id_user) {
+            this.id_material = id_material;
+            this.id_user = id_user;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setLocation(String location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder setDeadline(Date deadline) {
+            this.deadline = deadline;
+            return this;
+        }
+
+        public Material build() {
+            Material material = new Material(this);
+
+            return material;
+        }
+    }
+
     public Long getId_material() {
         return id_material;
     }

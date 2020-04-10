@@ -124,6 +124,122 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
+    public User(Builder builder) {
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.email = builder.email;
+        this.workplace = builder.workplace;
+        this.position = builder.position;
+        this.location = builder.location;
+        this.country = builder.country;
+        this.city = builder.city;
+        this.phone = builder.phone;
+        this.points = builder.points;
+        this.password = builder.password;
+        this.vk = builder.vk;
+        this.fb = builder.fb;
+        this.twitter = builder.twitter;
+        this.website = builder.website;
+        this.provider = builder.provider;
+        this.roles = builder.roles;
+    }
+
+    public static class Builder {
+        private Long id_user;
+        private String name;
+        private String surname;
+        private String email;
+        private String workplace;
+        private String position;
+        private String location;
+        private String country;
+        private String city;
+        private String phone;
+        private int points;
+        private String password;
+        private String vk;
+        private String fb;
+        private String twitter;
+        private String website;
+        private AuthProvider provider;
+        private Set<Role> roles;
+
+        public Builder(Long id_user, String name, String email, String password, AuthProvider provider, Set<Role> roles) {
+            this.id_user = id_user;
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.provider = provider;
+            this.roles = roles;
+        }
+
+        public Builder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Builder setWorkplace(String workplace) {
+            this.workplace = workplace;
+            return this;
+        }
+
+        public Builder setPosition(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public Builder setLocation(String location) {
+            this.location = location;
+            return this;
+        }
+
+        public Builder setCountry(String country) {
+            this.country = country;
+            return this;
+        }
+
+        public Builder setCity(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder setPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder setPoints(int points) {
+            this.points = points;
+            return this;
+        }
+
+        public Builder setVk(String vk) {
+            this.vk = vk;
+            return this;
+        }
+
+        public Builder setFb(String fb) {
+            this.fb = fb;
+            return this;
+        }
+
+        public Builder setTwitter(String twitter) {
+            this.twitter = twitter;
+            return this;
+        }
+
+        public Builder setWebSite(String webSite) {
+            this.website = webSite;
+            return this;
+        }
+
+        public User build() {
+            User user = new User(this);
+
+            return user;
+        }
+    }
+
     public Long getId_user() {
         return id_user;
     }

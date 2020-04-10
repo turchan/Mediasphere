@@ -37,12 +37,41 @@ public class Report implements Serializable {
 
     public Report() {}
 
-    public Report(String title, String content, User id_user, Contact id_contact, Date sent) {
-        this.title = title;
-        this.content = content;
-        this.id_user = id_user;
-        this.id_contact = id_contact;
-        this.sent = sent;
+    public Report(Builder builder) {
+        this.title = builder.title;
+        this.content = builder.content;
+        this.id_user = builder.id_user;
+        this.id_contact = builder.id_contact;
+    }
+
+    public static class Builder {
+        private Long id_report;
+        private String title;
+        private String content;
+        private User id_user;
+        private Contact id_contact;
+
+        public Builder(Long id_report, User id_user, Contact id_contact) {
+            this.id_report = id_report;
+            this.id_user = id_user;
+            this.id_contact = id_contact;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Report build() {
+           Report report = new Report(this);
+
+           return report;
+        }
     }
 
     public Long getId_report() {
