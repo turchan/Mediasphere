@@ -20,14 +20,14 @@ public class MaterialController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Iterable<Material> getAll()
     {
         return materialService.findAll();
     }
 
     @GetMapping("/{materialId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Material getMaterial(@PathVariable Long materialId)
     {
         return materialService.findById(materialId);
@@ -35,7 +35,7 @@ public class MaterialController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create/{sphereId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Material create(@RequestBody Material material, @CurrentUser UserPrincipal userPrincipal,
                            @PathVariable Long sphereId) {
 
@@ -46,7 +46,7 @@ public class MaterialController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/update")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Material update(@RequestBody Material material)
     {
         materialService.update(material);
@@ -56,7 +56,7 @@ public class MaterialController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{materialId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable Long materialId)
     {
         materialService.deleteById(materialId);

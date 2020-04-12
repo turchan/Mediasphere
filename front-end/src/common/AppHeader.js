@@ -20,14 +20,16 @@ class AppHeader extends Component {
                                     <li>
                                         <NavLink to="/contacts">Contacts</NavLink>
                                     </li>
-                                    <li>
-                                        <NavLink to="/reports">Reports</NavLink>
-                                    </li>
+                                    {
+                                        this.props.currentUser.roles.map(
+                                            user => 
+                                                <li key={user.id_role == 1}>
+                                                    <NavLink to="/reports">Reports</NavLink>
+                                                </li>)
+                                        
+                                    }
                                     <li>
                                         <NavLink to="/materials">Materials</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="/yourContacts">Your Contacts</NavLink>
                                     </li>
                                     <li>
                                         <a onClick={this.props.onLogout}>Logout</a>

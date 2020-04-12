@@ -30,20 +30,20 @@ public class ContactController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Iterable<Contact> getAll() {
         return contactService.findAll();
     }
 
     @GetMapping("/{contactId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Contact getContact(@PathVariable Long contactId) {
         return contactService.findById(contactId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create/{sphereId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Contact createContact(@RequestBody Contact contact, @CurrentUser UserPrincipal userPrincipal,
                                  @PathVariable Long sphereId) {
 
@@ -54,7 +54,7 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/update")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Contact updateContact(@RequestBody Contact contact) {
         contactService.update(contact);
 
@@ -63,7 +63,7 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/purchase/{contactId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Purchase purchase(@PathVariable Long contactId, @CurrentUser UserPrincipal userPrincipal) {
         User user = userService.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
@@ -81,7 +81,7 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{contactId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable Long contactId) {
         contactService.deleteById(contactId);
     }
