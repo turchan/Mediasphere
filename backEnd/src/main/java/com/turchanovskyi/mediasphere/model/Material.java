@@ -172,8 +172,6 @@ public class Material implements Serializable {
         this.views = views;
     }
 
-
-
     public List<Sphere> getSphereList() {
         return sphereList;
     }

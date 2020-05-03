@@ -78,14 +78,8 @@ public class AuthController {
         roles.add(role);
 
 
-        // Creating user's account
         User user = new User.Builder(null, signUpRequest.getName(), signUpRequest.getEmail(),
                 signUpRequest.getPassword(), AuthProvider.local, roles).build();
-        /*user.setName(signUpRequest.getName());
-        user.setEmail(signUpRequest.getEmail());
-        user.setPassword(signUpRequest.getPassword());
-        user.setProvider(AuthProvider.local);
-        user.setRoles(roles);*/
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

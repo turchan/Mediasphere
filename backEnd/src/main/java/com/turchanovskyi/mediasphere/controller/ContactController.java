@@ -3,7 +3,6 @@ package com.turchanovskyi.mediasphere.controller;
 import com.turchanovskyi.mediasphere.exception.ResourceNotFoundException;
 import com.turchanovskyi.mediasphere.model.Contact;
 import com.turchanovskyi.mediasphere.model.Purchase;
-import com.turchanovskyi.mediasphere.model.Sphere;
 import com.turchanovskyi.mediasphere.model.User;
 import com.turchanovskyi.mediasphere.securityConfig.auth.CurrentUser;
 import com.turchanovskyi.mediasphere.securityConfig.auth.UserPrincipal;
