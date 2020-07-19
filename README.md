@@ -27,7 +27,7 @@ For installing you have to use:<br/>
 
 
 1) Create .JAR file via command: ```mvn compile```
-2) Launch the back-end server of application from directrory "BackEnd" via command: ```mvn exec:java -Dexec.mainClass="com.turchanovskyi.virtual_university.VirtualUniversityApplication"```
+2) Launch the back-end server of application from directrory "BackEnd" via command: ```mvn exec:java -Dexec.mainClass="com.turchanovskyi.mediasphere.MediasphereApplication"```
 3) Launch the front-end server of application from directory "FrontEnd" via command: ``` npm start ```
 4) Open the application using browser via address: localhost: 4200
 
